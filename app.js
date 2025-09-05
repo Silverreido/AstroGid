@@ -227,24 +227,37 @@ function setupEventListeners() {
     });
 
     // Кнопка "Назад" в категориях (возврат к выбору знака)
-    document.getElementById('category-back-btn').addEventListener('click', function() {
-        document.getElementById('category-section').classList.add('hidden');
-        document.getElementById('zodiac-section').classList.remove('hidden');
-        document.getElementById('zodiac-section').classList.add('fade-in');
-        
-        // Сбрасываем выбор знака
-        document.querySelectorAll('.zodiac-item').forEach(i => i.classList.remove('selected'));
-        selectedSign = null;
-    });
-    
-    // Кнопка "Назад" в результате
-    document.getElementById('back-btn').addEventListener('click', function() {
-        document.getElementById('result-section').classList.add('hidden');
-        document.getElementById('category-section').classList.remove('hidden');
-    });
+    const backButton = document.getElementById('category-back-btn');
+    if (backButton) {
+        backButton.addEventListener('click', function() {
+            console.log('Кнопка "Назад" нажата!'); // Для отладки
+            document.getElementById('category-section').classList.add('hidden');
+            document.getElementById('zodiac-section').classList.remove('hidden');
+            document.getElementById('zodiac-section').classList.add('fade-in');
+            
+            // Сбрасываем выбор знака
+            document.querySelectorAll('.zodiac-item').forEach(i => i.classList.remove('selected'));
+            selectedSign = null;
+        });
+    } else {
+        console.error('Кнопка category-back-btn не найдена!');
+    }
+
+    // Кнопка "Назад" в результате (возврат к выбору категории)
+    const resultBackButton = document.getElementById('back-btn');
+    if (resultBackButton) {
+        resultBackButton.addEventListener('click', function() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('category-section').classList.remove('hidden');
+            document.getElementById('category-section').classList.add('fade-in');
+        });
+    }
 
     // Кнопка "Поделиться"
-    document.getElementById('share-btn').addEventListener('click', shareAdvice);
+    const shareButton = document.getElementById('share-btn');
+    if (shareButton) {
+        shareButton.addEventListener('click', shareAdvice);
+    }
 }
 
 function showAdvice(sign, category) {
