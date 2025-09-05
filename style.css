@@ -314,3 +314,28 @@ h2 {
     opacity: 0;
     pointer-events: none;
 }
+/* Стили для кнопки "Назад" */
+.btn-back {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateX(-5px);
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+    .btn-back {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
