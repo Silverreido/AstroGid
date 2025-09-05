@@ -226,6 +226,17 @@ function setupEventListeners() {
         });
     });
 
+    // Кнопка "Назад" в категориях (возврат к выбору знака)
+    document.getElementById('category-back-btn').addEventListener('click', function() {
+        document.getElementById('category-section').classList.add('hidden');
+        document.getElementById('zodiac-section').classList.remove('hidden');
+        document.getElementById('zodiac-section').classList.add('fade-in');
+        
+        // Сбрасываем выбор знака
+        document.querySelectorAll('.zodiac-item').forEach(i => i.classList.remove('selected'));
+        selectedSign = null;
+    });
+    
     // Кнопка "Назад" в результате
     document.getElementById('back-btn').addEventListener('click', function() {
         document.getElementById('result-section').classList.add('hidden');
