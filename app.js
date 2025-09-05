@@ -201,6 +201,11 @@ function initZodiacGrid() {
 }
 
 function setupEventListeners() {
+    function setupEventListeners() {
+    console.log('Функция setupEventListeners запущена'); // Отладка
+    
+    const backButton = document.getElementById('category-back-btn');
+    console.log('Найдена кнопка назад:', backButton); // Отладка
     let selectedSign = null;
     let selectedCategory = null;
 
