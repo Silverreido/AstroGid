@@ -165,7 +165,9 @@ function createStars() {
 document.addEventListener('DOMContentLoaded', function() {
     createStars();
     initZodiacGrid();
-    setupEventListeners(); // Симулируем загрузку
+    setupEventListeners(); 
+    
+    // Симулируем загрузку
     simulateLoading();
 });
 
