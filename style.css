@@ -314,6 +314,7 @@ h2 {
     opacity: 0;
     pointer-events: none;
 }
+
 /* Стили для кнопки "Назад" */
 .btn-back {
     background: rgba(255, 255, 255, 0.1) !important;
