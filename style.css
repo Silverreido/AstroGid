@@ -340,3 +340,12 @@ h2 {
         font-size: 14px;
     }
 }
+/* Гарантируем что контейнер виден */
+.container {
+    display: block !important;
+}
+
+/* Убираем loader наверняка */
+#loader {
+    display: none !important;
+}
