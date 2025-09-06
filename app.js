@@ -176,3 +176,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // На всякий случай - fallback
 setTimeout(initApp, 2000);
+// Функция для показа рекламы
+function showAd() {
+    // Проверяем, находится ли приложение в VK
+    if (typeof vkBridge !== 'undefined') {
+        vkBridge.send("VKWebAppShowNativeAds", { ad_format: "reward" })
+            .then(data => {
+                console.log('Реклама показана', data);
+                // Награда за просмотр рекламы
+                showBonusAdvice();
+            })
+            .catch(error => {
+                console.log('Ошибка показа рекламы', error);
+                // Показываем совет даже если реклама не загрузилась
+                showBonusAdvice();
+            });
+    } else {
+        // Для тестирования вне VK
+        showBonusAdvice();
+    }
+}
+
+// Бонусный совет после рекламы
+function showBonusAdvice() {
+    if (!window.currentAdvice) return;
+    
+    const bonusAdvices = {
+        love: ["⭐ Бонус: Сегодня идеальный день для признания в чувствах!", "🌟 После рекламы: Ваша любовная энергия удвоена!"],
+        career: ["⭐ Бонус: Новые карьерные возможности уже на пути к вам!", "🌟 После рекламы: Профессиональный успех гарантирован!"],
+        money: ["⭐ Бонус: Финансовый поток активирован!", "🌟 После рекламы: Ожидайте неожиданную прибыль!"],
+        health: ["⭐ Бонус: Энергия здоровья наполняет вас!", "🌟 После рекламы: Витамины удачи в действии!"],
+        mood: ["⭐ Бонус: Настройся на волну позитива!", "🌟 После рекламы: Улыбка привлечет удачу!"]
+    };
+    
+    const randomBonus = bonusAdvices[window.currentCategory] || ["⭐ Бонус: Звезды благоволят вам!"];
+    const bonusText = randomBonus[Math.floor(Math.random() * randomBonus.length)];
+    
+    document.getElementById('advice-text').textContent += `\n\n${bonusText}`;
+}
+
+// Обновите функцию showAdvice
+function showAdvice(sign, category) {
+    if (!horoscopeData[sign] || !horoscopeData[sign][category]) return;
+    
+    const signData = horoscopeData[sign];
+    const adviceList = signData[category];
+    const randomAdvice = adviceList[Math.floor(Math.random() * adviceList.length)];
+
+    document.getElementById('result-icon').textContent = signData.icon;
+    document.getElementById('result-title').textContent = `Совет для ${signData.name}`;
+    document.getElementById('advice-text').textContent = randomAdvice;
+
+    document.getElementById('category-section').classList.add('hidden');
+    document.getElementById('result-section').classList.remove('hidden');
+
+    window.currentAdvice = {
+        sign: signData.name,
+        icon: signData.icon,
+        advice: randomAdvice
+    };
+    
+    window.currentCategory = category;
+    
+    // Показываем рекламу каждый 3-й раз
+    const showAdCount = parseInt(localStorage.getItem('adCount') || '0');
+    if (showAdCount >= 2) {
+        showAd();
+        localStorage.setItem('adCount', '0');
+    } else {
+        localStorage.setItem('adCount', (showAdCount + 1).toString());
+    }
+}
